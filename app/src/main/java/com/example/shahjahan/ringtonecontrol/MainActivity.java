@@ -1,38 +1,42 @@
 package com.example.shahjahan.ringtonecontrol;
-
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
-
-public class MainActivity extends ActionBarActivity {
-
+/**
+ * This demonstrates how you can implement switching between the tabs of a
+ * TabHost through fragments, using FragmentTabHost.
+ */
+public class MainActivity extends AppCompatActivity {
+    private FragmentTabHost mTabHost;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//        toolbar goes here
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar.setLogo(R.mipmap.ic_launcher);
+        toolbar.setTitle(" Ringtone Control");
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        setSupportActionBar(toolbar);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //the fragment section
 
-        return super.onOptionsItemSelected(item);
+
+        mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+
+        mTabHost.addTab(mTabHost.newTabSpec("simple").setIndicator("STATUS"),
+                Status.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("contacts").setIndicator("ALLOW"),
+                AllowNumber.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("custom").setIndicator("BLOCK"),
+                AllowNumber.class, null);
+
     }
 }
