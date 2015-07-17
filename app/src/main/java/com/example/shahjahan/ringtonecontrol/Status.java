@@ -10,8 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import java.util.ArrayList;
 
 
 /**
@@ -19,10 +24,11 @@ import android.widget.TextView;
  */
 public class Status extends Fragment {
     //    To display all contacts
-    String[] Name = new String[91];
+//    String[] Name = new String[91];
+    private ArrayList<String> Name= new ArrayList<String>();;
     //    list view for list display
     ListView contactListView;
-
+    ToggleButton statusToggle;
 
 
     public Status() {
@@ -37,6 +43,23 @@ public class Status extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_status, container, false);
 
+//        The button is for the purpose of setting silent/Ringtone mode
+
+        statusToggle = (ToggleButton)view.findViewById(R.id.statusToggle);
+
+        statusToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    Toast.makeText(getActivity(),"ON",Toast.LENGTH_LONG).show();
+                } else {
+                    // The toggle is disabled
+                    Toast.makeText(getActivity(),"OFF",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
 
         displayContacts();
 
@@ -49,8 +72,10 @@ public class Status extends Fragment {
         return view;
     }
 
+
+
     private void displayContacts() {
-        int i = 0;
+//        int i = 0;
 
         ContentResolver cr = getActivity().getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
@@ -74,12 +99,11 @@ public class Status extends Fragment {
 
                         if ( name != null )
                         {
-                            Name[i++] = "" + i + " " +name;
+                            Name.add(name);
 
                         }
                     }
-                    if ( i > 90 )
-                        break;
+
                     pCur.close();
                 }
             }

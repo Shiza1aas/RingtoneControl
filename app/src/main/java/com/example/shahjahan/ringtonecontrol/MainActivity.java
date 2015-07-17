@@ -31,11 +31,9 @@ public class MainActivity extends AppCompatActivity {
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("simple").setIndicator("STATUS"),
+        mTabHost.addTab(mTabHost.newTabSpec("simple").setIndicator("CONTROL RINGTONE"),
                 Status.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("contacts").setIndicator("ALLOW"),
-                AllowNumber.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("custom").setIndicator("BLOCK"),
+        mTabHost.addTab(mTabHost.newTabSpec("contacts").setIndicator("ABOUT APP"),
                 AllowNumber.class, null);
 
     }
